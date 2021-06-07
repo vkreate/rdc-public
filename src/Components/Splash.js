@@ -8,6 +8,8 @@ import CONSTANTS from '../Utilities/Constants';
 import BackgroundImage1 from '../Assets/logo_bg.jpg';
 import CText from '../ReusableComponents/CText';
 import COLORS from '../Utilities/Colors';
+import CopyRight from '../ReusableComponents/CopyRight';
+import AppRouter from '../Routes/AppRouter';
 
 class Splash extends Component {
   constructor(props) {
@@ -15,53 +17,49 @@ class Splash extends Component {
   }
 
   async componentDidMount() {
-    // SplashScreen.hide()
-    setTimeout(function(){
-      SplashScreen.hide()
+    setTimeout(function () {
+      SplashScreen.hide();
     }, 3000);
-    // setTimeout(SplashScreen.hide(), 3000);
     let token = await ReadItem('token');
     const data = await ReadItem('role');
     global.role = data;
     if (token === null) {
       this.props.navigation.navigate('Login');
     } else {
+      <AppRouter />
       // this.props.navigation.navigate('AppHome');
-      this.props.navigation.dispatch(
-        CommonActions.reset({
-          index: 1,
-          routes: [
-            {
-              name: CONSTANTS.SCREENS.BARCODE,
-              params: {
-                transition: 'horizontal',
-                //   userType: data,
-              },
-            },
-          ],
-        }),
-      );
+    //   this.props.navigation.dispatch(
+    //     CommonActions.reset({
+    //       index: 1,
+    //       routes: [
+    //         {
+    //           name: CONSTANTS.SCREENS.BARCODE,
+    //           params: {
+    //             transition: 'horizontal',
+    //             //   userType: data,
+    //           },
+    //         },
+    //       ],
+    //     }),
+    //   );
     }
   }
   render() {
     return (
       <View style={styles.container}>
-        <ImageBackground
-          source={BackgroundImage1}
-          style={styles.backgroundImage}>
-          <View style={{flex:1,justifyContent:"center"}}>
+        <View style={{flex: 1, justifyContent: 'center'}}>
           <CText
             style={{
-              color: COLORS.SECONDARY_COLOR,
+              color: 'white',
               textAlign: 'center',
               fontFamily: 'Quicksand-Regular',
               fontSize: 32,
-              fontWeight:'bold'
+              fontWeight: 'bold',
             }}>
-            Track & Trace
+            TRACESCI
           </CText>
-          </View>
-        </ImageBackground>
+        </View>
+        <CopyRight color="white" />
       </View>
     );
   }
@@ -71,6 +69,7 @@ const styles = StyleSheet.create({
   backgroundImage: {flex: 1, width: null, height: null},
   container: {
     flex: 1,
+    backgroundColor: COLORS.SECONDARY_COLOR,
   },
   appLogo: {
     width: 190,

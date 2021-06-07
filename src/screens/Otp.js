@@ -4,31 +4,42 @@
  * @flow
  */
 import React, {Component} from 'react';
-import {StyleSheet, View, ImageBackground, BackHandler, Text} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ImageBackground,
+  BackHandler,
+  Text,
+} from 'react-native';
 import COLORS from '../Utilities/Colors';
 import {observer, inject} from 'mobx-react';
 import CodeInput from 'react-native-confirmation-code-input';
 import CText from '../ReusableComponents/CText';
 import CLoader from '../ReusableComponents/CLoader';
-import BackgroundImage1 from '../Assets/logo_bg.jpg';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {CButton} from '../ReusableComponents/CButton';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {mobileNumber} from '../Utilities/APi/validation';
 import CONSTANTS from '../Utilities/Constants';
+import CopyRight from '../ReusableComponents/CopyRight';
+import HeaderTitle from '../ReusableComponents/HeaderTitle';
+import {SaveItem} from '../Utilities/helpers/AsyncStorage';
+import AppRouter from '../Routes/AppRouter';
 
 @inject('OtpStore', 'LoginStore')
 @observer
-class OtpScreen extends Component {
+class Otp extends Component {
   constructor(props) {
     super(props);
-    this.backHandler = BackHandler.addEventListener(
-        'hardwareBackPressLogin',
-        this.backButtonHandler,
-    );
     this.state = {
       error: '',
       modelVisible: false,
     };
+    this.backHandler = BackHandler.addEventListener(
+      'hardwareBackPressLogin',
+      this.backButtonHandler,
+    );
+    
   }
   backButtonHandler = () => {
     this.props.navigation.navigate(CONSTANTS.SCREENS.LOGIN);
@@ -90,19 +101,20 @@ class OtpScreen extends Component {
       let response = await otpInput(phoneNumber, otp);
       console.log(response, 'response:::: in otp screem');
       if (response.success === true) {
-        this.props.navigation.navigate('Barcode');
+        this.props.LoginStore.setToken(response.token, phoneNumber);
       } else {
-        console.log('inside else')
+        console.log('inside else');
         this.setState({
           error: 'Please Enter Valid Otp',
           modelVisible: true,
         });
       }
-    }else{
-        this.setState({
-            error: 'Please Enter Valid Otp',
-            modelVisible: true,
-        });
+    } else {
+      this.setState({
+        error: 'Please Enter Valid Otp',
+        modelVisible: true,
+      });
+      console.log("state", this.state);
     }
   };
   componentDidMount() {
@@ -112,131 +124,127 @@ class OtpScreen extends Component {
 
   render() {
     return (
-      <ImageBackground source={BackgroundImage1} style={styles.backgroundImage}>
-        <View style={{flex:1}}>
-        <CText
-            style={{
-              color: COLORS.SECONDARY_COLOR,
-              textAlign: 'center',
-              fontFamily: 'Quicksand-Regular',
-              fontSize:32,
-              marginTop:'30%',
-              fontWeight:'bold'
-            }}>
-          Track & Trace
-        </CText>
-        <View style={{justifyContent:'center',marginTop:'30%'}}>
-
+      <View
+        style={{
+          flex: 1,
+          flexGrow: 1,
+          justifyContent: 'center',
+          backgroundColor: 'white'
+        }}>
+        <HeaderTitle headerTitle="TRACESCI" />
+        <View style={{flex: 1, justifyContent: 'center'}}>
           <CText
             style={{
               fontSize: 28,
               fontWeight: 'bold',
-              color: 'white',
-              marginLeft: 30,
-              marginBottom: 20,
+              color: COLORS.SECONDARY_COLOR,
+              textAlign: 'center',
             }}>
-            Enter OTP
+            OTP
           </CText>
-
+          <View style={{alignItems: 'center'}}>
           <CodeInput
             ref="codeInputRef2"
             secureTextEntry
-            activeColor="black"
-            inactiveColor="black"
+            activeColor={COLORS.SECONDARY_COLOR}
+            inactiveColor={COLORS.SECONDARY_COLOR}
+            cellBorderWidth={0}
             autoFocus={false}
             ignoreCase={true}
             codeLength={4}
-            ClassNames="border-l-r"
-            inputPosition="center"
+            ClassNames="border-b"
+            inputPosition="left"
             size={70}
             onFulfill={(isValid, code) => {
               this._onFinishCheckingCode2(isValid, code);
             }}
             containerStyle={{
               marginHorizontal: 30,
-              // marginTop: 30,
               marginBottom: 20,
               justifyContent: 'space-between',
-              // paddingBottom:0
-              // height:0,
-              flex:.05,
+              flex: 0.05,
             }}
             codeInputStyle={{
-              borderWidth: 1.5,
-              borderRadius: 15,
-              backgroundColor: 'white',
+              borderBottomColor: COLORS.SECONDARY_COLOR,
+              color: COLORS.SECONDARY_COLOR,
+              borderBottomWidth: 3,
               height: 50,
             }}
           />
-
-          <TouchableOpacity style={styles.ButtonStyle} onPress={this.submit}>
-            <View>
-              <CText style={styles.Button}>SUBMIT</CText>
-            </View>
-          </TouchableOpacity>
-
-            <View style={{flexDirection:'row',marginHorizontal: 30,justifyContent:'center',alignItems:'center'}}>
+          <View style={styles.ButtonContainer}>
+            <TouchableOpacity style={styles.ButtonStyle} onPress={this.submit}>
+              <View style={{alignItems: 'center'}}>
+                <Icon name="angle-double-right" size={40} color="#fff" />
+              </View>
+            </TouchableOpacity>
+          </View>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginHorizontal: 30,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <CText
+              style={{
+                color: COLORS.SECONDARY_COLOR,
+                marginTop: 40,
+                fontSize: 16,
+                textAlign: 'center',
+              }}>
+              Didn't Receive OTP?
+            </CText>
+            <TouchableOpacity onPress={this.resendOtp}>
               <CText
-                  style={{
-                    color: 'white',
-                    marginTop: 40,
-                    fontSize: 16,
-                    textAlign: 'center',
-                  }}>
-                Didn't Receive OTP?
-              </CText>
-              <TouchableOpacity onPress={this.resendOtp}>
-              <CText
-                  style={{
-                    color: 'white',
-                    marginTop: 40,
-                    fontSize: 16,
-                    textAlign: 'center',
-                    fontWeight:'bold',
-                    marginLeft:3
-                  }}>
+                style={{
+                  color: COLORS.SECONDARY_COLOR,
+                  marginTop: 40,
+                  fontSize: 16,
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  marginLeft: 3,
+                }}>
                 Resend OTP
               </CText>
-              </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
+          </View>
+        {this.state.modelVisible && (
+          <TouchableOpacity
+            onPress={() => this.setState({modelVisible: false})}
+            style={{
+              bottom: 0,
+              zIndex: 2,
+              backgroundColor: COLORS.SECONDARY_COLOR,
+              padding: 10,
+              width: '100%',
+            }}>
+            <View>
+              <Text style={{color: 'white'}}>{this.state.error}</Text>
             </View>
-
-
-
-
-          {this.props.OtpStore.loader||this.props.LoginStore.loader && <CLoader />}
-        </View>
-
-        </View>
-          {this.state.modelVisible === true && (
-              <TouchableOpacity onPress={()=>this.setState({modelVisible: false})}
-                                style={{justifyContent:'flex-end',backgroundColor:'white',padding:10,width:'100%'}}>
-                  <View >
-                      <Text>{this.state.error}</Text>
-                  </View>
-              </TouchableOpacity>
-
-          )}
-      </ImageBackground>
+          </TouchableOpacity>
+        )}
+        {this.props.OtpStore.loader ||
+            (this.props.LoginStore.loader && <CLoader />)}
+        <CopyRight />
+      </View>
     );
   }
 }
 
-export default OtpScreen;
+export default Otp;
 
 const styles = StyleSheet.create({
-  backgroundImage: {flex: 1, width: null, height: null},
   ButtonStyle: {
-    marginHorizontal: 30,
-    width: '84%',
-    // alignItems:'center',
-    // paddingHorizontal: 25,
-    height: 50,
-    // paddingHorizontal: 70,
-    backgroundColor: COLORS.BLUE_THEME,
-    borderRadius: 15,
-    alignItems: 'center',
+    backgroundColor: COLORS.SECONDARY_COLOR,
     justifyContent: 'center',
-    marginTop: 70,
+    width: 70,
+    height: 70,
+    borderRadius: 70 / 2,
+  },
+  ButtonContainer: {
+    marginTop: 60,
   },
   Button: {
     color: COLORS.SECONDARY_COLOR,

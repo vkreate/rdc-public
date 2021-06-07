@@ -8,41 +8,43 @@
 import React from 'react';
 import {StatusBar} from 'react-native';
 import CustomErrorFallback from './src/Utilities/CustomErrorFallback';
+import 'react-native-gesture-handler';
 import ErrorBoundary from 'react-native-error-boundary';
 import AppRouter from './src/Routes/AppRouter';
-import {Provider, observer} from 'mobx-react';
+import PublicRouter from './src/Routes/PublicRouter';
+import { inject, observer, Provider } from "mobx-react";
 import stores from './src/Stores/Stores';
 import COLORS from './src/Utilities/Colors';
 import {NavigationContainer} from '@react-navigation/native';
-import { ReadItem } from "./src/Utilities/helpers/AsyncStorage";
-
-
-console.disableYellowBox = true;
-
-@observer
+import {ReadItem} from './src/Utilities/helpers/AsyncStorage';
+import Main from './src/screens/Main';
+// console.disableYellowBox = true;
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      token : null
+    };
+  }
+  componentDidMount() {
+    this.userTypeCheck();
+    this.tokenCheck();
+  }
+  userTypeCheck = async () => {
+    const data = await ReadItem('role');
+    global['role'] = data;
+  };
 
-  componentDidMount(){
-    this.userTypeCheck()
-  }
-  userTypeCheck=async ()=>{
-    const data=await ReadItem('role')
-    global['role']=data
-  }
+  tokenCheck = async () => {
+    const token = await ReadItem('token');
+    this.setState({token})
+  };
 
   render() {
     return (
-        <Provider {...stores}>
-          <NavigationContainer>
-            <StatusBar
-                barStyle="dark-content"
-                backgroundColor={COLORS.SECONDARY_COLOR}
-            />
-            <ErrorBoundary FallbackComponent={CustomErrorFallback}>
-              <AppRouter />
-            </ErrorBoundary>
-          </NavigationContainer>
-        </Provider>
+      <Provider {...stores}>
+            <Main />
+      </Provider>
     );
   }
 }

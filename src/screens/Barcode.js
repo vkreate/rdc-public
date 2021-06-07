@@ -17,7 +17,7 @@ import {inject, observer} from 'mobx-react';
 
 @inject('OtpStore')
 @observer
-class BarcodeScreen extends Component {
+class Barcode extends Component {
   constructor(props) {
     super(props);
     this.backHandler = BackHandler.addEventListener(
@@ -92,14 +92,13 @@ class BarcodeScreen extends Component {
           // ref={(node) => { this.scanner = node }}
          // containerStyle={{margin:0,padding:0}}
           cameraStyle={{height:1920}}
-
         />
       </View>
     );
   }
 }
 
-export default BarcodeScreen;
+export default Barcode;
 
 const styles = StyleSheet.create({
   centerText: {

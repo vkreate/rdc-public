@@ -5,6 +5,7 @@ const CONSTANTS = {
     OTP: 'Otp',
     SPLASH: 'Splash',
     BARCODE: 'Barcode',
+    SIDEBAR: 'SideBar',
     WEBVIEW: 'WebView',
   },
   KEY: {

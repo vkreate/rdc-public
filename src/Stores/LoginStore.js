@@ -6,10 +6,12 @@
  */
 import {observable, action, decorate} from 'mobx';
 import axios from 'axios';
-import CONSTANTS from '../Utilities/Constants';
+import { DeleteItem, SaveItem, ReadItem } from '../Utilities/helpers/AsyncStorage';
 class LoginStore {
   phoneNumber = '';
+  phoneNumberPrefix = '';
   loader = false;
+  token = null;
 
   setLoader = value => {
     this.loader = value;
@@ -17,6 +19,31 @@ class LoginStore {
 
   setPhoneNumber = value => {
     this.phoneNumber = value;
+  };
+
+  setToken = async (token, phoneNumber) => {
+    this.token = token;
+    await SaveItem('token', token);
+    await SaveItem('phoneNumber', phoneNumber);
+  };
+
+  signOut = async () => {
+    if(await ReadItem('token')) {
+      this.token = await ReadItem('token');
+      await DeleteItem('token');
+      await DeleteItem('phoneNumber');
+    }
+    this.token = null;
+    this.phoneNumber =null;
+  };
+
+  tokenCheck = async () => {
+      this.token = await ReadItem('token') ? await ReadItem('token') : null;
+      this.phoneNumber = await ReadItem('phoneNumber') ? await ReadItem('phoneNumber') : null;
+  }
+
+  setPhoneNumberPrefix = value => {
+    this.phoneNumberPrefix = value;
   };
 
   //reset data
@@ -30,15 +57,12 @@ class LoginStore {
       country_code: '91',
       phone: mobileNumber,
     };
-    console.log(data, 'data::::::::::::::::::::: in otp ');
     let response = await axios
       .post('Http://tnt.vkreate.in/api/get-otp', data)
       .catch(err => {
         this.setLoader(false);
         alert(err);
       });
-    // console.log(response,'response::::')
-    // console.log(response.data,'response::::data')
     return response.data;
   };
 }
@@ -46,9 +70,12 @@ class LoginStore {
 decorate(LoginStore, {
   phoneNumber: observable,
   loader: observable,
-
+  token:observable,
   setPhoneNumber: action,
+  setToken: action,
+  tokenCheck: action,
   setLoader: action,
   resetAllData: action,
+  signOut: action
 });
 export default new LoginStore();
