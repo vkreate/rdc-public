@@ -1,0 +1,14 @@
+com/rdcestampillage/citizenapp/ReactNativeFlipper.java
+ com.rdcestampillage.citizenapp.ReactNativeFlipper
+ com.rdcestampillage.citizenapp.ReactNativeFlipper$1
+ com.rdcestampillage.citizenapp.ReactNativeFlipper$2
+ com.rdcestampillage.citizenapp.ReactNativeFlipper$2$1
+com/rdcestampillage/citizenapp/BuildConfig.java
+ com.rdcestampillage.citizenapp.BuildConfig
+com/rdcestampillage/citizenapp/MainApplication.java
+ com.rdcestampillage.citizenapp.MainApplication
+ com.rdcestampillage.citizenapp.MainApplication$1
+com/facebook/react/PackageList.java
+ com.facebook.react.PackageList
+com/rdcestampillage/citizenapp/MainActivity.java
+ com.rdcestampillage.citizenapp.MainActivity
