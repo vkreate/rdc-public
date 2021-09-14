@@ -2,7 +2,7 @@ const Colors = {
   YELLOW: '#FAB702',
   RED: '#ed3237',
   BLUE: '#007CBA',
-  SECONDARY_COLOR: '#B0004B',
+  SECONDARY_COLOR: '#EFD51E',
   HEADER: '#DCDCDC',
   TRANSPARENT: 'transparent',
   BLACK: 'black',

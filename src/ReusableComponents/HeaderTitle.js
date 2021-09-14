@@ -20,12 +20,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     position: 'absolute',
-    top: 0,
+    top: 10,
     backgroundColor: COLORS.TRANSPARENT,
   },
   titleText: {
     color: Colors.SECONDARY_COLOR,
-    textTransform: 'uppercase',
     textAlign: 'center',
     ...Fonts.medium,
     fontSize: sizes.h1,

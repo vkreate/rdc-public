@@ -5,24 +5,27 @@
  * @format
  * @flow strict-local
  */
- import React from 'react';
- import {View} from 'react-native';
- import AppRouter from '../Routes/AppRouter';
- import PublicRouter from '../Routes/PublicRouter';
- import COLORS from '../Utilities/Colors';
- import { inject, observer} from "mobx-react";
-import { ReadItem } from '../Utilities/helpers/AsyncStorage';
-import {StatusBar} from 'react-native';
+import React from 'react';
+import {View} from 'react-native';
+import AppRouter from '../Routes/AppRouter';
+import PublicRouter from '../Routes/PublicRouter';
+import COLORS from '../Utilities/Colors';
+import {inject, observer} from 'mobx-react';
+import {ReadItem} from '../Utilities/helpers/AsyncStorage';
+import {StatusBar, AppState} from 'react-native';
 import CustomErrorFallback from '../Utilities/CustomErrorFallback';
 import 'react-native-gesture-handler';
 import ErrorBoundary from 'react-native-error-boundary';
 import {NavigationContainer} from '@react-navigation/native';
 
- @inject('OtpStore', 'LoginStore')
- @observer
- class Main extends React.Component {
+@inject('OtpStore', 'LoginStore')
+@observer
+class Main extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      appState: AppState.currentState,
+    };
   }
 
   componentDidMount() {
@@ -32,23 +35,22 @@ import {NavigationContainer} from '@react-navigation/native';
     const {token} = this.props.LoginStore;
     return (
       <NavigationContainer>
-          <StatusBar
-            barStyle="dark-content"
-            backgroundColor={COLORS.SECONDARY_COLOR}
-          />
-          <ErrorBoundary FallbackComponent={CustomErrorFallback}>
-              {token  ? (
-                <>
-                  <AppRouter />
-                  </>
-        ) : (
-           <PublicRouter />
-        )} 
-          </ErrorBoundary>
-        </NavigationContainer>
+        <StatusBar
+          barStyle="dark-content"
+          backgroundColor={COLORS.SECONDARY_COLOR}
+        />
+        <ErrorBoundary FallbackComponent={CustomErrorFallback}>
+          {token ? (
+            <>
+              <AppRouter />
+            </>
+          ) : (
+            <PublicRouter />
+          )}
+        </ErrorBoundary>
+      </NavigationContainer>
     );
   }
 }
 
 export default Main;
-

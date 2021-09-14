@@ -1,4 +1,6 @@
 const CONSTANTS = {
+  BASE_URL: 'https://rdc-estampillage.com/api',
+  APP_HEADER_TITLE: 'ZALA MAYELE',
   SCREENS: {
     LOGIN: 'Login',
     APPHOME: 'AppHome',
@@ -7,6 +9,8 @@ const CONSTANTS = {
     BARCODE: 'Barcode',
     SIDEBAR: 'SideBar',
     WEBVIEW: 'WebView',
+    PRODUCT_DETAIL: 'ProductDetail',
+    PRODUCT_REPORT: 'ProductReport',
   },
   KEY: {
     TAB_PRESS: 'tabPress',
@@ -21,9 +25,9 @@ const CONSTANTS = {
     SUBMIT_YOUR_COMPLAINTS: 'Submit Your Complaint',
     RESEND_OTP: 'Resend OTP',
     PROFILE: 'My Profile',
-    COMPLAIN_DETAILS:'Complaint Detail',
-    SMART_STREET_LIGHT:'SMART STREET LIGHT',
-    LOG_STATUS:'Status Logs',
+    COMPLAIN_DETAILS: 'Complaint Detail',
+    SMART_STREET_LIGHT: 'SMART STREET LIGHT',
+    LOG_STATUS: 'Status Logs',
     YOU_CAN_UPLOAD: 'Maximum 5 image',
     CITY_ID: 1,
   },

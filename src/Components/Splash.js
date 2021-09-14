@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, ImageBackground} from 'react-native';
+import {View, StyleSheet, ImageBackground, Image} from 'react-native';
+import imagePath from '../Utilities/ImagePath';
 
 import SplashScreen from 'react-native-splash-screen';
 import {ReadItem} from '../Utilities/helpers/AsyncStorage';
@@ -9,64 +10,47 @@ import BackgroundImage1 from '../Assets/logo_bg.jpg';
 import CText from '../ReusableComponents/CText';
 import COLORS from '../Utilities/Colors';
 import CopyRight from '../ReusableComponents/CopyRight';
+import SplashFooter from '../ReusableComponents/SplashFooter';
 import AppRouter from '../Routes/AppRouter';
 
-class Splash extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
   }
 
   async componentDidMount() {
-    setTimeout(function () {
-      SplashScreen.hide();
-    }, 3000);
     let token = await ReadItem('token');
     const data = await ReadItem('role');
     global.role = data;
     if (token === null) {
-      this.props.navigation.navigate('Login');
+      setTimeout(() => {
+        SplashScreen.hide();
+        this.props.navigation.navigate('Login');
+      }, 2000);
     } else {
-      <AppRouter />
-      // this.props.navigation.navigate('AppHome');
-    //   this.props.navigation.dispatch(
-    //     CommonActions.reset({
-    //       index: 1,
-    //       routes: [
-    //         {
-    //           name: CONSTANTS.SCREENS.BARCODE,
-    //           params: {
-    //             transition: 'horizontal',
-    //             //   userType: data,
-    //           },
-    //         },
-    //       ],
-    //     }),
-    //   );
+      <AppRouter />;
     }
   }
   render() {
     return (
       <View style={styles.container}>
-        <View style={{flex: 1, justifyContent: 'center'}}>
-          <CText
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontFamily: 'Quicksand-Regular',
-              fontSize: 32,
-              fontWeight: 'bold',
-            }}>
-            TRACESCI
-          </CText>
+        <ImageBackground
+          source={imagePath.SPLASH_BG}
+          style={styles.backgroundImage}>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Image
+            source={imagePath.APP_LOGO}
+            style={{width: 200, height: 200}}
+          />
         </View>
-        <CopyRight color="white" />
+        </ImageBackground>
       </View>
     );
   }
 }
-export default Splash;
+export default Login;
 const styles = StyleSheet.create({
-  backgroundImage: {flex: 1, width: null, height: null},
+  backgroundImage: {flex: 1, width: null, height: null, resizeMode: 'cover'},
   container: {
     flex: 1,
     backgroundColor: COLORS.SECONDARY_COLOR,

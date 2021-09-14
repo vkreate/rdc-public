@@ -4,27 +4,18 @@
  * @flow
  */
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  View,
-  ImageBackground,
-  BackHandler,
-  Text,
-} from 'react-native';
+import {StyleSheet, View, BackHandler, Text} from 'react-native';
 import COLORS from '../Utilities/Colors';
 import {observer, inject} from 'mobx-react';
 import CodeInput from 'react-native-confirmation-code-input';
 import CText from '../ReusableComponents/CText';
 import CLoader from '../ReusableComponents/CLoader';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {CButton} from '../ReusableComponents/CButton';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {mobileNumber} from '../Utilities/APi/validation';
 import CONSTANTS from '../Utilities/Constants';
 import CopyRight from '../ReusableComponents/CopyRight';
 import HeaderTitle from '../ReusableComponents/HeaderTitle';
-import {SaveItem} from '../Utilities/helpers/AsyncStorage';
-import AppRouter from '../Routes/AppRouter';
 
 @inject('OtpStore', 'LoginStore')
 @observer
@@ -39,7 +30,6 @@ class Otp extends Component {
       'hardwareBackPressLogin',
       this.backButtonHandler,
     );
-    
   }
   backButtonHandler = () => {
     this.props.navigation.navigate(CONSTANTS.SCREENS.LOGIN);
@@ -69,6 +59,8 @@ class Otp extends Component {
           modelVisible: true,
         });
       }
+    }
+  }
     } else {
       setLoader(false);
       this.setState({
@@ -114,7 +106,7 @@ class Otp extends Component {
         error: 'Please Enter Valid Otp',
         modelVisible: true,
       });
-      console.log("state", this.state);
+      console.log('state', this.state);
     }
   };
   componentDidMount() {
@@ -129,9 +121,9 @@ class Otp extends Component {
           flex: 1,
           flexGrow: 1,
           justifyContent: 'center',
-          backgroundColor: 'white'
+          backgroundColor: 'white',
         }}>
-        <HeaderTitle headerTitle="TRACESCI" />
+        <HeaderTitle headerTitle={CONSTANTS.APP_HEADER_TITLE} />
         <View style={{flex: 1, justifyContent: 'center'}}>
           <CText
             style={{
@@ -143,41 +135,43 @@ class Otp extends Component {
             OTP
           </CText>
           <View style={{alignItems: 'center'}}>
-          <CodeInput
-            ref="codeInputRef2"
-            secureTextEntry
-            activeColor={COLORS.SECONDARY_COLOR}
-            inactiveColor={COLORS.SECONDARY_COLOR}
-            cellBorderWidth={0}
-            autoFocus={false}
-            ignoreCase={true}
-            codeLength={4}
-            ClassNames="border-b"
-            inputPosition="left"
-            size={70}
-            onFulfill={(isValid, code) => {
-              this._onFinishCheckingCode2(isValid, code);
-            }}
-            containerStyle={{
-              marginHorizontal: 30,
-              marginBottom: 20,
-              justifyContent: 'space-between',
-              flex: 0.05,
-            }}
-            codeInputStyle={{
-              borderBottomColor: COLORS.SECONDARY_COLOR,
-              color: COLORS.SECONDARY_COLOR,
-              borderBottomWidth: 3,
-              height: 50,
-            }}
-          />
-          <View style={styles.ButtonContainer}>
-            <TouchableOpacity style={styles.ButtonStyle} onPress={this.submit}>
-              <View style={{alignItems: 'center'}}>
-                <Icon name="angle-double-right" size={40} color="#fff" />
-              </View>
-            </TouchableOpacity>
-          </View>
+            <CodeInput
+              ref="codeInputRef2"
+              secureTextEntry
+              activeColor={COLORS.SECONDARY_COLOR}
+              inactiveColor={COLORS.SECONDARY_COLOR}
+              cellBorderWidth={0}
+              autoFocus={false}
+              ignoreCase={true}
+              codeLength={4}
+              ClassNames="border-b"
+              inputPosition="left"
+              size={70}
+              onFulfill={(isValid, code) => {
+                this._onFinishCheckingCode2(isValid, code);
+              }}
+              containerStyle={{
+                marginHorizontal: 30,
+                marginBottom: 20,
+                justifyContent: 'space-between',
+                flex: 0.05,
+              }}
+              codeInputStyle={{
+                borderBottomColor: COLORS.SECONDARY_COLOR,
+                color: COLORS.SECONDARY_COLOR,
+                borderBottomWidth: 3,
+                height: 50,
+              }}
+            />
+            <View style={styles.ButtonContainer}>
+              <TouchableOpacity
+                style={styles.ButtonStyle}
+                onPress={this.submit}>
+                <View style={{alignItems: 'center'}}>
+                  <Icon name="angle-double-right" size={40} color="#fff" />
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
           <View
             style={{
@@ -189,7 +183,7 @@ class Otp extends Component {
             <CText
               style={{
                 color: COLORS.SECONDARY_COLOR,
-                marginTop: 40,
+                marginTop: 15,
                 fontSize: 16,
                 textAlign: 'center',
               }}>
@@ -199,7 +193,7 @@ class Otp extends Component {
               <CText
                 style={{
                   color: COLORS.SECONDARY_COLOR,
-                  marginTop: 40,
+                  marginTop: 15,
                   fontSize: 16,
                   textAlign: 'center',
                   fontWeight: 'bold',
@@ -209,15 +203,14 @@ class Otp extends Component {
               </CText>
             </TouchableOpacity>
           </View>
-          </View>
+        </View>
         {this.state.modelVisible && (
           <TouchableOpacity
             onPress={() => this.setState({modelVisible: false})}
             style={{
               bottom: 0,
-              zIndex: 2,
               backgroundColor: COLORS.SECONDARY_COLOR,
-              padding: 10,
+              padding: 20,
               width: '100%',
             }}>
             <View>
@@ -225,8 +218,7 @@ class Otp extends Component {
             </View>
           </TouchableOpacity>
         )}
-        {this.props.OtpStore.loader ||
-            (this.props.LoginStore.loader && <CLoader />)}
+        {this.props.OtpStore.loader && <CLoader />}
         <CopyRight />
       </View>
     );

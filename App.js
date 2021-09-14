@@ -12,7 +12,7 @@ import 'react-native-gesture-handler';
 import ErrorBoundary from 'react-native-error-boundary';
 import AppRouter from './src/Routes/AppRouter';
 import PublicRouter from './src/Routes/PublicRouter';
-import { inject, observer, Provider } from "mobx-react";
+import {inject, observer, Provider} from 'mobx-react';
 import stores from './src/Stores/Stores';
 import COLORS from './src/Utilities/Colors';
 import {NavigationContainer} from '@react-navigation/native';
@@ -23,7 +23,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      token : null
+      token: null,
     };
   }
   componentDidMount() {
@@ -37,13 +37,13 @@ class App extends React.Component {
 
   tokenCheck = async () => {
     const token = await ReadItem('token');
-    this.setState({token})
+    this.setState({token});
   };
 
   render() {
     return (
       <Provider {...stores}>
-            <Main />
+        <Main />
       </Provider>
     );
   }

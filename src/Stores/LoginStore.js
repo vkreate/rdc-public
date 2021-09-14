@@ -6,8 +6,13 @@
  */
 import {observable, action, decorate} from 'mobx';
 import axios from 'axios';
-import { DeleteItem, SaveItem, ReadItem } from '../Utilities/helpers/AsyncStorage';
+import {
+  DeleteItem,
+  SaveItem,
+  ReadItem,
+} from '../Utilities/helpers/AsyncStorage';
 class LoginStore {
+  // 8561919680
   phoneNumber = '';
   phoneNumberPrefix = '';
   loader = false;
@@ -28,19 +33,22 @@ class LoginStore {
   };
 
   signOut = async () => {
-    if(await ReadItem('token')) {
+    if (await ReadItem('token')) {
       this.token = await ReadItem('token');
       await DeleteItem('token');
       await DeleteItem('phoneNumber');
+      await DeleteItem('role');
     }
     this.token = null;
-    this.phoneNumber =null;
+    this.phoneNumber = null;
   };
 
   tokenCheck = async () => {
-      this.token = await ReadItem('token') ? await ReadItem('token') : null;
-      this.phoneNumber = await ReadItem('phoneNumber') ? await ReadItem('phoneNumber') : null;
-  }
+    this.token = (await ReadItem('token')) ? await ReadItem('token') : null;
+    this.phoneNumber = (await ReadItem('phoneNumber'))
+      ? await ReadItem('phoneNumber')
+      : null;
+  };
 
   setPhoneNumberPrefix = value => {
     this.phoneNumberPrefix = value;
@@ -54,11 +62,11 @@ class LoginStore {
   login = async mobileNumber => {
     this.setLoader(true);
     const data = {
-      country_code: '91',
+      country_code: '243',
       phone: mobileNumber,
     };
     let response = await axios
-      .post('Http://tnt.vkreate.in/api/get-otp', data)
+      .post('https://rdc-estampillage.com/api/get-otp', data)
       .catch(err => {
         this.setLoader(false);
         alert(err);
@@ -70,12 +78,12 @@ class LoginStore {
 decorate(LoginStore, {
   phoneNumber: observable,
   loader: observable,
-  token:observable,
+  token: observable,
   setPhoneNumber: action,
   setToken: action,
   tokenCheck: action,
   setLoader: action,
   resetAllData: action,
-  signOut: action
+  signOut: action,
 });
 export default new LoginStore();

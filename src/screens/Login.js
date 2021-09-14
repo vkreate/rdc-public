@@ -49,14 +49,10 @@ class Login extends Component {
   };
   setPrefix = value => {
     const newVal = value.replace(/(?:(?:\+|0{0,2})91)/g, '');
-    console.log(
-      '🚀 ~ file: LoginScreen.js ~ line 52 ~ LoginScreen ~ newVal',
-      newVal,
-    );
     this.setPhoneNumberPrefix(newVal);
   };
   async componentDidMount() {
-    SplashScreen.hide();
+    // SplashScreen.hide();
     this.props.LoginStore.resetAllData();
     const {setLatitude = {}, setLongitude = {}} = this.props.OtpStore;
 
@@ -138,18 +134,17 @@ class Login extends Component {
     return (
       <View
         style={{
-          flex: 1,
           flexGrow: 1,
           justifyContent: 'center',
           backgroundColor: 'white',
         }}>
-        <HeaderTitle headerTitle="TRACESCI" />
+        <HeaderTitle headerTitle={CONSTANTS.APP_HEADER_TITLE} />
         <View>
           <CText style={styles.signInText}>Sign in</CText>
           <View style={{alignItems: 'center'}}>
             <View style={styles.section}>
               <TextInput
-                placeholder="+ 91"
+                placeholder="+ 243"
                 placeholderTextColor="black"
                 style={styles.PhoneNumberPrefix}
                 keyboardType="numeric"
@@ -186,7 +181,7 @@ class Login extends Component {
               bottom: 0,
               zIndex: 2,
               backgroundColor: COLORS.SECONDARY_COLOR,
-              padding: 10,
+              padding: 20,
               width: '100%',
             }}>
             <View>
@@ -226,15 +221,11 @@ const styles = StyleSheet.create({
   section: {
     flexDirection: 'row',
     height: 50,
-    marginVertical: 40,
+    marginVertical: 30,
     width: '85%',
   },
   textStyle: {
     color: COLORS.SECONDARY_COLOR,
-  },
-  AndroidSafeArea: {
-    flex: 1,
-    backgroundColor: 'black',
   },
   ButtonStyle: {
     backgroundColor: COLORS.SECONDARY_COLOR,

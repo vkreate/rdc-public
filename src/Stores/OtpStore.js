@@ -6,16 +6,21 @@
  */
 
 import {observable, action, decorate} from 'mobx';
-import {SaveItem} from '../Utilities/helpers/AsyncStorage';
 import axios from 'axios';
+import {
+  SaveItem,
+  ReadItem,
+} from '../Utilities/helpers/AsyncStorage';
 import CONSTANTS from '../Utilities/Constants';
 
 class OtpStore {
   loader = false;
   otp = '';
   errorText = '';
-  latitude: '';
-  longitude: '';
+  latitude = '';
+  longitude = '';
+  profileDetail = {};
+  role = ReadItem('role') ? ReadItem('role') : null;
   setOtp = value => {
     this.otp = value;
   };
@@ -35,36 +40,42 @@ class OtpStore {
   setLongitude = value => {
     this.longitude = value;
   };
+
+   roleCheck = async () => {
+    this.role = (await ReadItem('role')) ? await ReadItem('role') : null;
+  };
+
   //API
   otpInput = async (phoneNumber, otp) => {
-
     try {
       this.setLoader(true);
       const data = {
-        country_code: '91',
+        country_code: '243',
         phone: phoneNumber,
         otp: otp,
       };
 
-      console.log(data, 'data::::::::::::::::::::: in otp ');
-
-      let response = await axios
-          .post('Http://tnt.vkreate.in/api/verify-otp', data)
+      let response = await axios.post(
+        'https://rdc-estampillage.com/api/verify-otp',
+        data,
+      );
       this.setLoader(false);
+      this.profileDetail = response.data.profile;
+      await SaveItem('role', response.data.profile.role.toString());
+      this.role = response.data.profile.role;
       return response.data;
     } catch (e) {
       // console.log(JSON.parse(JSON.stringify(e)))
       // console.log(JSON.parse(JSON.stringify(e.message)),'message')
-      let response=JSON.parse(JSON.stringify(e.response))
-      console.log(JSON.parse(JSON.stringify(e.response)),'response')
+      let response = JSON.parse(JSON.stringify(e.response));
+      console.log(JSON.parse(JSON.stringify(e.response)), 'response');
       this.setLoader(false);
       return response.data;
     }
     // console.log('response:::::::::::::::', response);
-   // SaveItem('token', response.data.token.toString());
+    // SaveItem('token', response.data.token.toString());
 
     // this.setLoader(false);
-
   };
 }
 
@@ -74,7 +85,7 @@ decorate(OtpStore, {
   errorText: observable,
   longitude: observable,
   latitude: observable,
-
+  profileDetail: observable,
   setLoader: action,
   setOtp: action,
   setErrorText: action,
