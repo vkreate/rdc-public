@@ -9,6 +9,7 @@ import CText from '../ReusableComponents/CText';
 import COLORS from '../Utilities/Colors';
 import {inject, observer} from 'mobx-react';
 import CLoader from '../ReusableComponents/CLoader';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 @inject('OtpStore', 'ProductStore')
 @observer
@@ -24,22 +25,24 @@ class ScanHistory extends Component {
   componentDidMount() {
     this.props.ProductStore.getScanedList();
     this.unsubscribe = this.props.navigation.addListener('focus', () => {
-      console.log("focus")
+      console.log('focus');
       this.props.ProductStore.resetReportData();
-    })
+      this.props.ProductStore.getScanedList();
+    });
   }
 
   componentWillUnmount() {
     this.unsubscribe();
   }
 
-  productDetails = async url => {
+  productDetails = async (url,scan_id) => {
     let latitude = this.props.OtpStore.latitude;
     let longitude = this.props.OtpStore.longitude;
     let response = await this.props.ProductStore.getProductDetail(
       url,
       latitude,
       longitude,
+      scan_id
     );
     if (response) {
       this.props.navigation.navigate('ProductDetail');
@@ -56,13 +59,15 @@ class ScanHistory extends Component {
           justifyContent: 'center',
           backgroundColor: '#f2f2f2',
         }}>
-        <ScrollView showsVerticalScrollIndicator={false} persistentScrollbar={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          persistentScrollbar={false}>
           {scans.length > 0
             ? scans.map((item, index) => (
                 <TouchableOpacity
                   key={index}
                   style={styles.container}
-                  onPress={() => this.productDetails(item.url)}>
+                  onPress={() => this.productDetails(item.url,item.scan_id)}>
                   <View style={styles.ListItem}>
                     <View style={styles.ListRow}>
                       <CText style={styles.HeadingText}>Product Name :</CText>
@@ -71,6 +76,14 @@ class ScanHistory extends Component {
                     <View style={styles.ListRow}>
                       <CText style={styles.HeadingText}>Scanned On :</CText>
                       <CText style={styles.text}>{item.date}</CText>
+                    </View>
+                    <View style={styles.ListRow}>
+                      <CText style={styles.HeadingText}>Genuine Product:</CText>
+                      {item.genuine_product === true ? (
+                        <Icon name="check" solid size={20} color="green" />
+                      ) : (
+                        <Icon name="times" solid size={20} color="red" />
+                      )}
                     </View>
                   </View>
                 </TouchableOpacity>

@@ -50,7 +50,7 @@ class OtpStore {
     try {
       this.setLoader(true);
       const data = {
-        country_code: '91',
+        country_code: '243',
         phone: phoneNumber,
         otp: otp,
       };

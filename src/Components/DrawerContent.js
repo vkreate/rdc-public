@@ -10,7 +10,7 @@ import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 class DrawerContent extends React.Component {
   constructor(props) {
     super(props);
-  }
+  } 
 
   componentDidMount() {
     this.props.OtpStore.roleCheck();
@@ -26,7 +26,7 @@ class DrawerContent extends React.Component {
               <View style={{flexDirection: 'row', marginTop: 15}}>
                 <View style={styles.UserInfo}>
                   <Title style={styles.Name}>Welcome</Title>
-                  <Caption style={styles.MobileNo}>+91{phoneNumber}</Caption>
+                  <Caption style={styles.MobileNo}>+243-{phoneNumber}</Caption>
                 </View>
               </View>
 
@@ -39,7 +39,18 @@ class DrawerContent extends React.Component {
                 activeBackgroundColor="rgba(0, 0, 0, .04)"
                 inactiveTintColor="rgba(0, 0, 0, .87)"
                 inactiveBackgroundColor="transparent"
-                labelStyle={{color: '#ffffff', fontSize: 18}}
+                labelStyle={{color: 'black', fontSize: 18}}
+                label="Information"
+                onPress={() => {
+                  this.props.navigation.navigate('Information');
+                }}
+              />
+               <DrawerItem
+                activeTintColor="#2196f3"
+                activeBackgroundColor="rgba(0, 0, 0, .04)"
+                inactiveTintColor="rgba(0, 0, 0, .87)"
+                inactiveBackgroundColor="transparent"
+                labelStyle={{color: 'black', fontSize: 18}}
                 label="New Scan"
                 onPress={() => {
                   this.props.navigation.navigate('Home');
@@ -50,7 +61,7 @@ class DrawerContent extends React.Component {
                 activeBackgroundColor="rgba(0, 0, 0, .04)"
                 inactiveTintColor="rgba(0, 0, 0, .87)"
                 inactiveBackgroundColor="transparent"
-                labelStyle={{color: '#ffffff', fontSize: 18}}
+                labelStyle={{color: 'black', fontSize: 18}}
                 label="Scan History"
                 onPress={() => {
                   this.props.navigation.navigate('ScanList');
@@ -61,7 +72,7 @@ class DrawerContent extends React.Component {
                 activeBackgroundColor="rgba(0, 0, 0, .04)"
                 inactiveTintColor="rgba(0, 0, 0, .87)"
                 inactiveBackgroundColor="transparent"
-                labelStyle={{color: '#ffffff', fontSize: 18}}
+                labelStyle={{color: 'black', fontSize: 18}}
                 label="Logout"
                 onPress={signOut}
               />
@@ -92,19 +103,19 @@ const styles = StyleSheet.create({
   },
   BottomLine: {
     marginTop: 25,
-    borderTopColor: 'white',
+    borderTopColor: 'black',
     borderTopWidth: 1,
   },
   title: {
     fontSize: 16,
     marginTop: 3,
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
     fontWeight: 'bold',
   },
   caption: {
     fontSize: 18,
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
   },
   UserInfo: {
@@ -114,13 +125,13 @@ const styles = StyleSheet.create({
   Name: {
     fontSize: 18,
     marginTop: 3,
-    color: 'white',
+    color: 'black',
     textAlign: 'left',
     fontWeight: 'bold',
   },
   MobileNo: {
     fontSize: 18,
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
   },
   row: {

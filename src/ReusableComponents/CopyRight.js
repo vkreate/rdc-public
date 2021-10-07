@@ -29,7 +29,15 @@ const CopyRight = ({color}) => {
         }}>
         DRC
       </CText>
-      <Image style={styles.image} source={imagePath.FOOTER} resizeMode={'contain'} style={{height: 55}} />
+      <View style={{height:55,width:"100%",marginBottom:20}}>
+        <Image
+        style={{flex:1,height:undefined,width:undefined,resizeMode:"stretch"}}
+        source={imagePath.FOOTER}>
+          
+
+        </Image>
+     
+    </View>
     </View>
   );
 };
@@ -48,9 +56,6 @@ const styles = StyleSheet.create({
     bottom: 40,
   },
   image: {
-        flex: 1,
-        alignSelf: 'stretch',
-        width: win.width,
-        height: win.height,
+      
     }
 });

@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Linking,
   BackHandler,
+  ToastAndroid
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import QRCodeScanner from 'react-native-qrcode-scanner';
@@ -32,7 +33,7 @@ class Barcode extends Component {
     };
   }
   backButtonHandler = () => {
-    BackHandler.exitApp();
+    this.props.navigation.navigate('Home');
     return true;
   };
   async componentDidMount() {
@@ -80,26 +81,37 @@ class Barcode extends Component {
     );
     // }
 
-  this.unsubscribe = this.props.navigation.addListener('focus', () => {
-    this.props.ProductStore.resetReportData();
-  })
-}
+    this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.props.ProductStore.resetReportData();
+    });
+  }
 
-componentWillUnmount() {
-  this.unsubscribe();
-}
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
   onSuccess = async e => {
-    console.log(e, 'e::::::::::::::', e.data);
+    console.log(e, 'e::::::::::::::', e.data); 
+    console.warn("res",e);
     let latitude = this.props.OtpStore.latitude;
     let longitude = this.props.OtpStore.longitude;
+
+    if(e.data.includes("rdc-estampillage.com/api")){
     let response = await this.props.ProductStore.getProductDetail(
       e.data,
       latitude,
       longitude,
     );
     if (response) {
+      
+      console.log("api_res",response);
+      console.warn("api_res",response)
       this.props.navigation.navigate('ProductDetail');
     }
+   
+  }
+  else{
+    ToastAndroid.show("Invalid QR Code, Try another one", ToastAndroid.SHORT)
+  }
   };
 
   flashHandler = () => {

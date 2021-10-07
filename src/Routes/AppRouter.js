@@ -2,6 +2,8 @@ import * as React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Barcode from '../screens/Barcode';
+import Home from '../screens/Home';
+import Information from '../screens/Information';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
 import ProductReportScreen from '../screens/ProductReportScreen';
 import ScanHistoryScreen from '../screens/ScanHistoryScreen';
@@ -10,10 +12,45 @@ import COLORS from '../Utilities/Colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DrawerContent from '../Components/DrawerContent';
 const HomeStack = createStackNavigator();
+const InformationStack = createStackNavigator();
+const ScanStack = createStackNavigator();
 const ScanListStack = createStackNavigator();
 const productDetailStack = createStackNavigator();
 const productReportStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+
+const InformationStackScreen = ({navigation}) => (
+  <InformationStack.Navigator
+    screenOptions={() => ({
+      title: '',
+      headerBackTitleVisible: false,
+      gestureEnabled: false,
+      headerShown: true,
+    })}>
+    <InformationStack.Screen
+      name={CONSTANTS.SCREENS.BARCODE}
+      component={Information}
+      options={{
+        headerShown: true,
+        title: CONSTANTS.APP_HEADER_TITLE,
+        headerTintColor: 'black',
+        headerTitleStyle: {flex: 1, textAlign: 'center', marginRight: 38},
+        headerStyle: {
+          backgroundColor: COLORS.SECONDARY_COLOR,
+        },
+        headerLeft: () => (
+          <Icon
+            name="bars"
+            onPress={() => navigation.openDrawer()}
+            style={{marginLeft: 8}}
+            size={30}
+            color="#fff"
+          />
+        ),
+      }}
+    />
+  </InformationStack.Navigator>
+);
 
 const HomeStackScreen = ({navigation}) => (
   <HomeStack.Navigator
@@ -25,11 +62,11 @@ const HomeStackScreen = ({navigation}) => (
     })}>
     <HomeStack.Screen
       name={CONSTANTS.SCREENS.BARCODE}
-      component={Barcode}
+      component={Home}
       options={{
         headerShown: true,
-        title: 'RDC Estampillage',
-        headerTintColor: 'white',
+        title: CONSTANTS.APP_HEADER_TITLE,
+        headerTintColor: 'black',
         headerTitleStyle: {flex: 1, textAlign: 'center', marginRight: 38},
         headerStyle: {
           backgroundColor: COLORS.SECONDARY_COLOR,
@@ -48,6 +85,39 @@ const HomeStackScreen = ({navigation}) => (
   </HomeStack.Navigator>
 );
 
+const ScanStackScreen = ({navigation}) => (
+<ScanStack.Navigator
+    screenOptions={() => ({
+      title: '',
+      headerBackTitleVisible: false,
+      gestureEnabled: false,
+      headerShown: true,
+    })}>
+    <ScanStack.Screen
+      name={CONSTANTS.SCREENS.BARCODE}
+      component={Barcode}
+      options={{
+        headerShown: true,
+        title: CONSTANTS.APP_HEADER_TITLE,
+        headerTintColor: 'black',
+        headerTitleStyle: {flex: 1, textAlign: 'center', marginRight: 38},
+        headerStyle: {
+          backgroundColor: COLORS.SECONDARY_COLOR,
+        },
+        headerLeft: () => (
+          <Icon
+            name="bars"
+            onPress={() => navigation.openDrawer()}
+            style={{marginLeft: 8}}
+            size={30}
+            color="#fff"
+          />
+        ),
+      }}
+    />
+  </ScanStack.Navigator>
+);
+
 const ScanListScreenStack = ({navigation}) => (
   <ScanListStack.Navigator
     screenOptions={() => ({
@@ -61,8 +131,8 @@ const ScanListScreenStack = ({navigation}) => (
       component={ScanHistoryScreen}
       options={{
         headerShown: true,
-        title: 'RDC Estampillage',
-        headerTintColor: 'white',
+        title: CONSTANTS.APP_HEADER_TITLE,
+        headerTintColor: 'black',
         headerTitleStyle: {flex: 1, textAlign: 'center', marginRight: 38},
         headerStyle: {
           backgroundColor: COLORS.SECONDARY_COLOR,
@@ -94,8 +164,8 @@ const ProductDetailScreenStack = ({navigation}) => (
       component={ProductDetailScreen}
       options={{
         headerShown: true,
-        title: 'RDC Estampillage',
-        headerTintColor: 'white',
+        title: CONSTANTS.APP_HEADER_TITLE,
+        headerTintColor: 'black',
         headerTitleStyle: {flex: 1, textAlign: 'center', marginRight: 38},
         headerStyle: {
           backgroundColor: COLORS.SECONDARY_COLOR,
@@ -127,8 +197,8 @@ const ProductReportScreenStack = ({navigation}) => (
       component={ProductReportScreen}
       options={{
         headerShown: true,
-        title: 'RDC Estampillage',
-        headerTintColor: 'white',
+        title: CONSTANTS.APP_HEADER_TITLE,
+        headerTintColor: 'black',
         headerTitleStyle: {flex: 1, textAlign: 'center', marginRight: 38},
         headerStyle: {
           backgroundColor: COLORS.SECONDARY_COLOR,
@@ -152,7 +222,9 @@ function AppRouter() {
     <Drawer.Navigator
       drawerContent={props => <DrawerContent {...props} />}
       initialRouteName="Home">
+      <Drawer.Screen name="Information" component={InformationStackScreen} />
       <Drawer.Screen name="Home" component={HomeStackScreen} />
+      <Drawer.Screen name="Scan" component={ScanStackScreen} />
       <Drawer.Screen name="ScanList" component={ScanListScreenStack} />
       <Drawer.Screen
         name="ProductDetail"

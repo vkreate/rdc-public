@@ -1,5 +1,6 @@
 const CONSTANTS = {
   BASE_URL: 'https://rdc-estampillage.com/api',
+  APP_HEADER_TITLE: 'ZALA MAYELE',
   SCREENS: {
     LOGIN: 'Login',
     APPHOME: 'AppHome',

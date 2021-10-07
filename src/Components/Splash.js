@@ -35,28 +35,14 @@ class Login extends Component {
     return (
       <View style={styles.container}>
         <ImageBackground
-          source={imagePath.SPLASH_IMG}
+          source={imagePath.SPLASH_BG}
           style={styles.backgroundImage}>
-          <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Image
-              source={imagePath.APP_LOGO}
-              style={{width: 200, height: 200}}
-            />
-            <CText
-              style={{
-                color: 'white',
-                textTransform: 'uppercase',
-                textAlign: 'center',
-                fontFamily: 'Quicksand-Regular',
-                fontSize: 32,
-                fontWeight: 'bold',
-              }}>
-              RDC Estampillage
-            </CText>
-            <SplashFooter color="white" />
-          </View>
-          <Image source={imagePath.FOOTER} style={{width: 430, height: 60, marginBottom: 10}} />
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Image
+            source={imagePath.APP_LOGO}
+            style={{width: 200, height: 200}}
+          />
+        </View>
         </ImageBackground>
       </View>
     );

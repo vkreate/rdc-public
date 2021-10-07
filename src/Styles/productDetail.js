@@ -7,7 +7,8 @@ export const productDetailStyle = StyleSheet.create({
   },
   ModalProductDetailContainer: {
     flex: 1,
-    marginLeft: 40,
+    paddingLeft: 40,
+    paddingRight: 40,
   },
   Heading: {
     fontSize: 18,
@@ -34,7 +35,7 @@ export const productDetailStyle = StyleSheet.create({
   ProductNameText: {
     fontSize: 22,
     marginTop: 5,
-    color: '#00FF00',
+    color: '#03C04A',
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
@@ -64,6 +65,7 @@ export const productDetailStyle = StyleSheet.create({
   ButtonStyle: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 15,
   },
   ButtonContainer: {
     marginTop: 20,
@@ -77,7 +79,7 @@ export const productDetailStyle = StyleSheet.create({
   ButtonText: {
     fontSize: 18,
     textAlign: 'center',
-    color: 'white',
+    color: 'black',
     justifyContent: 'center',
     textAlignVertical: 'center',
   },
