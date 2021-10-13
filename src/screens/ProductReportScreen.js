@@ -15,7 +15,7 @@ import {
   Text,
   Platform,
   Modal,
-  ScrollView,
+  ScrollView,Alert
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {inject, observer} from 'mobx-react';
@@ -96,42 +96,42 @@ class ProductReportScreen extends Component {
           inputLabel: 'Suspicious Product',
         },
         {
-          label: 'Change in taste',
+          label: 'Change In Taste',
           value: 'Change in taste',
           key: 'Change in taste',
           color: COLORS.SECONDARY_COLOR,
           inputLabel: 'Change in taste',
         },
         {
-          label: 'Wrong product',
+          label: 'Wrong Product',
           value: 'Wrong product',
           key: 'Wrong product',
           color: COLORS.SECONDARY_COLOR,
           inputLabel: 'Wrong product',
         },
         {
-          label: 'Retailer issue',
+          label: 'Retailer Issue',
           value: 'Retailer issue',
           key: 'Retailer issue',
           color: COLORS.SECONDARY_COLOR,
           inputLabel: 'Retailer issue',
         },
         {
-          label: 'Product details mismatch',
+          label: 'Product Details Mismatch',
           value: 'Product details mismatch',
           key: 'Product details mismatch',
           color: COLORS.SECONDARY_COLOR,
           inputLabel: 'Product details mismatch',
         },
         {
-          label: 'Label altered',
+          label: 'Label Altered',
           value: 'Label altered',
           key: 'Label altered',
           color: COLORS.SECONDARY_COLOR,
           inputLabel: 'Label altered!',
         },
         {
-          label: 'Other issue',
+          label: 'Other Issue',
           value: 'Other issue',
           key: 'Other issue',
           color: COLORS.SECONDARY_COLOR,
@@ -289,16 +289,18 @@ class ProductReportScreen extends Component {
   };
 
   handleUploadPhoto = async () => {
-    let {id, batch} = this.props.ProductStore.product;
+    let {id, batch,code_data} = this.props.ProductStore.product;
+   
     let token = (await ReadItem('token')) ? await ReadItem('token') : null;
     let data = {
       token: token,
-      product_id: id,
-      batch: batch,
+      product_id: JSON.stringify(id),
+      batch: JSON.stringify(batch),
       issue_type: this.state.issueType,
       description: this.state.description,
+      code_data:code_data
     };
-
+console.warn("d",data)
     if (!data.issue_type) {
       this.setState({
         error: 'Please choose product type of issue. ',
@@ -318,9 +320,12 @@ class ProductReportScreen extends Component {
     let uploadReportData = await this.props.ProductStore.uploadProductReport(
       body,
     );
-    if (uploadReportData && uploadReportData.success) {
+
+    console.warn("sucessData",uploadReportData),
+    console.log("sucessData",JSON.stringify(uploadReportData))
+    if (uploadReportData) {
       this.setState({
-        error: uploadReportData.message,
+        error:"Product reported successfully.",
         modelVisible: true,
         image: null,
         imageURI: null,
@@ -328,14 +333,17 @@ class ProductReportScreen extends Component {
         description: null,
         selectUploadImageType: null,
       });
+      this.props.navigation.navigate('Home');
+      Alert.alert("Product reported successfully")
     }
   };
 
   render() {
     return (
       <View style={styles.ProductReportContainer}>
+       
         <View style={styles.Heading}>
-          <CText style={styles.HeadingText}>Report Issue</CText>
+          <CText  style={styles.HeadingText}>Report Issue</CText>
         </View>
         <View style={styles.SelectPicker}>
           <RNPickerSelect
@@ -397,7 +405,7 @@ class ProductReportScreen extends Component {
               style={{
                 ...pickerSelectImageButtonStyles,
                 placeholder: {
-                  color: 'white',
+                  color: 'black',
                   fontSize: 10,
                 },
               }}
@@ -439,6 +447,7 @@ class ProductReportScreen extends Component {
           </TouchableOpacity>
         )}
         {this.props.ProductStore.loader && <CLoader />}
+       
       </View>
     );
   }
@@ -505,7 +514,7 @@ const styles = StyleSheet.create({
   ButtonText: {
     fontSize: 18,
     textAlign: 'center',
-    color: 'white',
+    color: 'black',
     justifyContent: 'center',
     textAlignVertical: 'center',
   },

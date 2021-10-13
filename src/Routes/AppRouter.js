@@ -33,7 +33,7 @@ const InformationStackScreen = ({navigation}) => (
       options={{
         headerShown: true,
         title: CONSTANTS.APP_HEADER_TITLE,
-        headerTintColor: 'white',
+        headerTintColor: 'black',
         headerTitleStyle: {flex: 1, textAlign: 'center', marginRight: 38},
         headerStyle: {
           backgroundColor: COLORS.SECONDARY_COLOR,
@@ -66,7 +66,7 @@ const HomeStackScreen = ({navigation}) => (
       options={{
         headerShown: true,
         title: CONSTANTS.APP_HEADER_TITLE,
-        headerTintColor: 'white',
+        headerTintColor: 'black',
         headerTitleStyle: {flex: 1, textAlign: 'center', marginRight: 38},
         headerStyle: {
           backgroundColor: COLORS.SECONDARY_COLOR,
@@ -99,7 +99,7 @@ const ScanStackScreen = ({navigation}) => (
       options={{
         headerShown: true,
         title: CONSTANTS.APP_HEADER_TITLE,
-        headerTintColor: 'white',
+        headerTintColor: 'black',
         headerTitleStyle: {flex: 1, textAlign: 'center', marginRight: 38},
         headerStyle: {
           backgroundColor: COLORS.SECONDARY_COLOR,
@@ -132,7 +132,7 @@ const ScanListScreenStack = ({navigation}) => (
       options={{
         headerShown: true,
         title: CONSTANTS.APP_HEADER_TITLE,
-        headerTintColor: 'white',
+        headerTintColor: 'black',
         headerTitleStyle: {flex: 1, textAlign: 'center', marginRight: 38},
         headerStyle: {
           backgroundColor: COLORS.SECONDARY_COLOR,
@@ -165,7 +165,7 @@ const ProductDetailScreenStack = ({navigation}) => (
       options={{
         headerShown: true,
         title: CONSTANTS.APP_HEADER_TITLE,
-        headerTintColor: 'white',
+        headerTintColor: 'black',
         headerTitleStyle: {flex: 1, textAlign: 'center', marginRight: 38},
         headerStyle: {
           backgroundColor: COLORS.SECONDARY_COLOR,
@@ -198,7 +198,7 @@ const ProductReportScreenStack = ({navigation}) => (
       options={{
         headerShown: true,
         title: CONSTANTS.APP_HEADER_TITLE,
-        headerTintColor: 'white',
+        headerTintColor: 'black',
         headerTitleStyle: {flex: 1, textAlign: 'center', marginRight: 38},
         headerStyle: {
           backgroundColor: COLORS.SECONDARY_COLOR,

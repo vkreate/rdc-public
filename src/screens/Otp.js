@@ -4,7 +4,7 @@
  * @flow
  */
 import React, {Component} from 'react';
-import {StyleSheet, View, BackHandler, Text} from 'react-native';
+import {StyleSheet, View, BackHandler, Text,Image} from 'react-native';
 import COLORS from '../Utilities/Colors';
 import {observer, inject} from 'mobx-react';
 import CodeInput from 'react-native-confirmation-code-input';
@@ -16,6 +16,7 @@ import {mobileNumber} from '../Utilities/APi/validation';
 import CONSTANTS from '../Utilities/Constants';
 import CopyRight from '../ReusableComponents/CopyRight';
 import HeaderTitle from '../ReusableComponents/HeaderTitle';
+import imagePath from '../Utilities/ImagePath';
 
 @inject('OtpStore', 'LoginStore')
 @observer
@@ -59,8 +60,6 @@ class Otp extends Component {
           modelVisible: true,
         });
       }
-    }
-  }
     } else {
       setLoader(false);
       this.setState({
@@ -123,7 +122,18 @@ class Otp extends Component {
           justifyContent: 'center',
           backgroundColor: 'white',
         }}>
-        <HeaderTitle headerTitle={CONSTANTS.APP_HEADER_TITLE} />
+         <Image
+       source={imagePath.HOME_LOGO}
+        style={{
+          justifyContent: 'center',
+    width: '60%',
+    height: 100,
+    resizeMode:"contain",
+    marginTop: 10,alignSelf:"center"
+        }}
+        >
+
+        </Image>
         <View style={{flex: 1, justifyContent: 'center'}}>
           <CText
             style={{
@@ -168,7 +178,7 @@ class Otp extends Component {
                 style={styles.ButtonStyle}
                 onPress={this.submit}>
                 <View style={{alignItems: 'center'}}>
-                  <Icon name="angle-double-right" size={40} color="#fff" />
+                  <Icon name="angle-double-right" size={40} color="black" />
                 </View>
               </TouchableOpacity>
             </View>

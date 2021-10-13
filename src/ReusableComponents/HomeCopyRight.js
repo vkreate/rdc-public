@@ -8,11 +8,15 @@ const win = Dimensions.get('window');
 const CopyRight = ({color}) => {
   return (
     <View style={styles.copyRight}>
-    <Image style={styles.image} source={imagePath.FOOTER} resizeMode={'contain'} style={{height: 55}} />
-      <CText
+      <View style={{height:50,width:"100%"}}>
+      <Image style={{flex:1,height:undefined,width:undefined,resizeMode:"stretch"}} source={imagePath.FOOTER}  />
+
+
+      </View>
+        <CText
         style={{
           marginTop: 10,
-          marginBottom: 5,
+         // marginBottom: 5,
           fontSize: 20,
           color: 'black',
         }}>
@@ -21,7 +25,7 @@ const CopyRight = ({color}) => {
       <CText
         style={{
           fontSize: 24,
-          marginBottom: 20,
+         // marginBottom: 20,
           color: 'black',
           fontWeight: 'bold'
         }}>
@@ -37,12 +41,12 @@ const styles = StyleSheet.create({
   copyRight: {
     flexDirection: 'column',
     width: '100%',
-    height: 70,
+   
     zIndex: -1,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
-    bottom: 40,
+   // position: 'absolute',
+    
   },
   image: {
         flex: 1,

@@ -5,12 +5,14 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  BackHandler
+  BackHandler,
+  ScrollView
 } from 'react-native';
 import imagePath from '../Utilities/ImagePath';
 import CText from '../ReusableComponents/CText';
 import HomeCopyRight from '../ReusableComponents/HomeCopyRight';
 import {productDetailStyle} from '../Styles/productDetail';
+import { fontWeight } from '../Styles/fonts';
 
 class Home extends React.Component {
   constructor(props) {
@@ -36,13 +38,25 @@ class Home extends React.Component {
   render() {
     return (
       <View style={styles.homeContainer}>
-        <Image source={imagePath.HOME_LOGO} style={styles.headerImage} />
-        <View style={styles.contentContainer}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+        <Image
+       source={imagePath.HOME_LOGO}
+        style={{
+          justifyContent: 'center',
+    width: '90%',
+    height: 100,
+    resizeMode:"contain",
+    marginTop: 10,alignSelf:"center"
+        }}
+        >
+
+        </Image>
+        <View style={{flex:1}}>
           <View style={styles.topTextContainer}>
-            <CText style={styles.textStyle}>You are seconds away </CText>
-            <CText style={styles.textStyle}>from finding out if the </CText>
-            <CText style={styles.textStyle}>product you are holding is </CText>
-            <CText style={styles.textStyle}>genuine or not.</CText>
+            <CText style={styles.bottomTextStyle}>You are seconds away </CText>
+            <CText style={styles.bottomTextStyle}>from finding out if the </CText>
+            <CText style={styles.bottomTextStyle}>product you are holding is </CText>
+            <CText style={styles.bottomTextStyle}>genuine or not.</CText>
           </View>
           <View style={styles.buttonContainerStyle}>
             <View style={productDetailStyle.ButtonStyle}>
@@ -54,21 +68,28 @@ class Home extends React.Component {
             </View>
           </View>
           <View style={styles.bottomTextContainer}>
-            <CText style={styles.bottomTextStyle}>
+            <CText style={styles.textStyle}>
               Zala Mayele, Tala Na Bopeke!
             </CText>
-            <CText style={styles.bottomTextStyle}>Is part of the</CText>
-            <CText style={styles.bottomTextStyle}>
+            <CText style={styles.textStyle}>Is part of the</CText>
+            <CText style={styles.textStyle}>
               Digital Tax Stamp Program,
             </CText>
-            <CText style={styles.bottomTextStyle}>implemented by the</CText>
-            <CText style={styles.bottomBoldTextStyle}>
+            <CText style={styles.textStyle}>implemented by the</CText>
+            <CText style={[styles.textStyle,{fontWeight:"bold"}]}>
               Ministry of Industry
             </CText>
+            
           </View>
+          
         </View>
+        </ScrollView>
+        <View style={{width:"100%",height:120,justifyContent:"center"}}>
         <HomeCopyRight />
-      </View>
+
+
+        </View>
+            </View>
     );
   }
 }
@@ -77,7 +98,8 @@ export default Home;
 
 const styles = StyleSheet.create({
   homeContainer: {
-    flexGrow: 1,
+
+    flex:1,
     alignItems: 'center',
   },
   buttonContainerStyle: {
@@ -88,11 +110,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   bottomTextContainer: {
-    marginTop: 25,
+    marginTop: 1,
   },
   textStyle: {
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 18,
   },
   bottomTextStyle: {
     textAlign: 'center',
@@ -107,6 +129,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '60%',
     height: 100,
-    marginTop: 10,
+    resizeMode:"contain",
+    marginTop: 10,alignSelf:"center"
   },
 });

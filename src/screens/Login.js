@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   PermissionsAndroid,
   Text,
+  Image
 } from 'react-native';
 import COLORS from '../Utilities/Colors';
 import {observer, inject} from 'mobx-react';
@@ -28,6 +29,7 @@ import HeaderTitle from '../ReusableComponents/HeaderTitle';
 import CopyRight from '../ReusableComponents/CopyRight';
 import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoding';
+import imagePath from '../Utilities/ImagePath';
 
 @inject('LoginStore', 'OtpStore')
 @observer
@@ -135,11 +137,34 @@ class Login extends Component {
       <View
         style={{
           flexGrow: 1,
-          justifyContent: 'center',
+        //  justifyContent: 'center',
           backgroundColor: 'white',
         }}>
-        <HeaderTitle headerTitle={CONSTANTS.APP_HEADER_TITLE} />
-        <View>
+      {/*   <HeaderTitle headerTitle={CONSTANTS.APP_HEADER_TITLE} /> */}
+      <Image
+       source={imagePath.HOME_LOGO}
+        style={{
+          justifyContent: 'center',
+    width: '60%',
+    height: 100,
+    resizeMode:"contain",
+    marginTop: 10,alignSelf:"center"
+        }}
+        >
+
+        </Image>
+         <View
+          style={{
+            flex: 1,
+            flexGrow: 1,
+            justifyContent:"center",
+            backgroundColor: 'white',
+          }}
+        >
+
+        <View
+          style={{marginBottom:70}}
+        >
           <CText style={styles.signInText}>Sign in</CText>
           <View style={{alignItems: 'center'}}>
             <View style={styles.section}>
@@ -168,7 +193,7 @@ class Login extends Component {
             </View>
             <TouchableOpacity style={styles.ButtonStyle} onPress={this.login}>
               <View style={{alignItems: 'center'}}>
-                <Icon name="angle-double-right" size={40} color="#fff" />
+                <Icon name="angle-double-right" size={40} color="black" />
               </View>
             </TouchableOpacity>
           </View>
@@ -191,6 +216,7 @@ class Login extends Component {
         )}
         {this.props.LoginStore.loader && <CLoader />}
         <CopyRight />
+        </View>
       </View>
     );
   }
